@@ -45,18 +45,18 @@ All methods will return a **promise**. Be sure to handle them accordingly, for e
 ```javascript
 // Use "then" syntax
 d2pt
-	.getHeroesMeta("MID")
-	.then((result) => {
-		console.log(result);
-	})
-	.catch((error) => {
-		console.error("Error:", error);
-	});
+ .getHeroesMeta("MID")
+ .then((result) => {
+  console.log(result);
+ })
+ .catch((error) => {
+  console.error("Error:", error);
+ });
 
 // Use acync/await syntax
 async function getMetaheroes() {
-	const result = await stratz.getHeroesMeta("MID");
-	console.log(result);
+ const result = await d2pt.getHeroesMeta("MID");
+ console.log(result);
 }
 
 // Will return:
@@ -79,14 +79,14 @@ async function getMetaheroes() {
 //...
 
 // Handling queryParameters
-stratz
-	.getMetaheroes("MID", { max_result: 10 }) // in a form of an object
-	.then((result) => {
-		console.log(result);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+d2pt
+ .getMetaheroes("MID", { max_result: 10 }) // in a form of an object
+ .then((result) => {
+  console.log(result);
+ })
+ .catch((err) => {
+  console.log(err);
+ });
 ```
 
 ## Development
