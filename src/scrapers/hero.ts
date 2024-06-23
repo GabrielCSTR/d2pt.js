@@ -8,7 +8,7 @@ import puppeteer from "puppeteer";
  */
 export async function scrapeHero(
 	heroName: HeroNamesType
-): Promise<IHeroInfo | null> {
+): Promise<IHeroInfo[] | null> {
 	const browser = await puppeteer.launch({
 		headless: true,
 		defaultViewport: null,
@@ -64,7 +64,7 @@ export async function scrapeHero(
 					})
 					.filter(Boolean);
 			}
-		)) as IHeroInfo;
+		)) as IHeroInfo[];
 
 		return heroData;
 	} catch (error) {

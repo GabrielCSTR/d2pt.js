@@ -45,7 +45,7 @@ export class D2PtScraper {
 	 * @param {HeroNamesType} heroName - The name of the hero to be fetched.
 	 * @returns {Promise<IHeroInfo | null>} - Returns a promise that resolves to an object containing information about the hero.
 	 */
-	async getHeroInfo(heroName: HeroNamesType): Promise<IHeroInfo | null> {
+	async getHeroInfo(heroName: HeroNamesType): Promise<IHeroInfo[] | null> {
 		const heroInfo = await scrapeHero(heroName);
 		return heroInfo;
 	}
