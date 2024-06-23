@@ -45,6 +45,7 @@ export async function scrapeMetaHeroes(
 				console.log(`Getting meta data for '${linkText}' heroes...`);
 
 				await link.click();
+
 				await sleep(2000);
 
 				const heroes = await page.evaluate(

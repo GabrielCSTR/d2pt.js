@@ -35,3 +35,16 @@ export type MetaHeroesAliases = {
 type MetaHeroesKeys = keyof MetaHeroes;
 type MetaHeroesAliasesKeys = keyof MetaHeroesAliases;
 export type metaHeroesType = MetaHeroesKeys | MetaHeroesAliasesKeys;
+
+export interface IheroInfo {
+	displayName: string;
+	npc: string;
+	hero_id: number;
+}
+
+export interface IHeroInfo {
+	role?: string;
+	winRate?: string;
+	matches?: string;
+	players?: string;
+}
