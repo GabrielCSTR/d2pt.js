@@ -6,7 +6,7 @@ import { scrapeMetaHeroes } from "./scrapers/meta";
 /**
  * Provides access to the scraping pages dota2protracker.com. This is the first thing you do to start.
  */
-class D2PtScraper {
+export class D2PtScraper {
 	private readonly _host: string = "dota2protracker.com";
 	private readonly _basePath: string = "/api/v1";
 
@@ -50,5 +50,3 @@ class D2PtScraper {
 		return heroInfo;
 	}
 }
-
-export default D2PtScraper;

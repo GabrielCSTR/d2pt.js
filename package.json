@@ -1,6 +1,6 @@
 {
 	"name": "d2pt.js",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"description": "A Node.js Dota2ProTracker Scraper",
 	"main": "./lib/index.js",
 	"module": "./lib/index.mjs",
@@ -22,6 +22,10 @@
 		"watch": "npm run build -- --watch",
 		"compile": "tsup ./src/index.ts --format cjs,esm --dts --outDir ./lib"
 	},
+	"files": [
+		"lib/**/*.js",
+		"lib/**/*.d.ts"
+	],
 	"keywords": [
 		"dota2protracker",
 		"stratz",
