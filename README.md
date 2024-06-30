@@ -10,7 +10,7 @@
 
 ### Features
 
-- Scraping espefic information from [DOTA2 PRO TRACKER](https://dota2protracker.com/hero)
+- Scraping specific information from [DOTA2 PRO TRACKER](https://dota2protracker.com/hero)
   - Meta hero
   - Hero info
 
