@@ -1,60 +1,66 @@
 {
-	"name": "d2pt.js",
-	"version": "1.0.7",
-	"description": "A Node.js Dota2ProTracker Scraper",
-	"main": "./lib/index.js",
-	"module": "./lib/index.mjs",
-	"exports": {
-		".": {
-			"require": "./lib/index.js",
-			"import": "./lib/index.mjs",
-			"types": "./lib/index.d.ts"
-		}
-	},
-	"types": "./lib/index.d.ts",
-	"directories": {
-		"example": "examples",
-		"lib": "lib"
-	},
-	"scripts": {
-		"build": "npm run clean && npm run compile",
-		"clean": "rm -rf ./lib",
-		"watch": "npm run build -- --watch",
-		"compile": "tsup ./src/index.ts --format cjs,esm --dts --outDir ./lib"
-	},
-	"files": [
-		"lib/**/*.js",
-		"lib/**/*.d.ts"
-	],
-	"keywords": [
-		"dota2protracker",
-		"stratz",
-		"dota",
-		"dota2",
-		"scraper"
-	],
-	"author": "GBRL DEV (https://github.com/gabrielcstr)",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/gabrielcstr/d2pt.js/issues"
-	},
-	"homepage": "https://github.com/gabrielcstr/d2pt.js#readme",
-	"dependencies": {
-		"puppeteer": "^22.11.2"
-	},
-	"devDependencies": {
-		"@types/node": "^20.14.5",
-		"dotenv": "^16.4.5",
-		"husky": "^9.0.11",
-		"ts-node": "^10.9.2",
-		"tsup": "^8.1.0",
-		"typescript": "^5.4.5"
-	},
-	"engines": {
-		"node": ">=18.0.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/GabrielCSTR/d2pt.js.git"
-	}
+  "name": "d2pt.js",
+  "version": "1.0.7",
+  "description": "A Node.js Dota2ProTracker Scraper",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "import": "./lib/index.mjs",
+      "types": "./lib/index.d.ts"
+    }
+  },
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./lib",
+    "test": "jest",
+    "watch": "npm run build -- --watch",
+    "compile": "tsup ./src/index.ts --format cjs,esm --dts --outDir ./lib",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags && rm -rf build/temp"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts"
+  ],
+  "keywords": [
+    "dota2protracker",
+    "stratz",
+    "dota",
+    "dota2",
+    "scraper"
+  ],
+  "author": "GBRL DEV (https://github.com/gabrielcstr)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabrielcstr/d2pt.js/issues"
+  },
+  "homepage": "https://github.com/gabrielcstr/d2pt.js#readme",
+  "dependencies": {
+    "puppeteer": "^22.11.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.13",
+    "@types/node": "^20.14.5",
+    "dotenv": "^16.4.5",
+    "husky": "^9.0.11",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.1.0",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielCSTR/d2pt.js.git"
+  }
 }
