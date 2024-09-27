@@ -6,11 +6,11 @@
 📦 A Minimalistic Node.js DOTA PRO TRACKER SCRAPER
 
 - [x] Get all meta heroes
-- [x] Get espefic hero
+- [x] Get specific hero
 
 ### Features
 
-- Scraping espefic information from [DOTA2 PRO TRACKER](https://dota2protracker.com/hero)
+- Scraping specific information from [DOTA2 PRO TRACKER](https://dota2protracker.com/hero)
   - Meta hero
   - Hero info
 
