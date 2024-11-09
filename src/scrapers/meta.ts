@@ -1,99 +1,123 @@
 import puppeteer from "puppeteer";
 import { Hero, MetaHeroesAliases, metaHeroesType } from "../models";
-import {
-	categoryAliases,
-	dataAllToProperty,
-	dataIndexToProperty,
-} from "../constants/constants";
+import { categoryAliases } from "../constants/constants";
 
 const sleep = (ms: number) => {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 export async function scrapeMetaHeroes(
-	category: metaHeroesType,
-	max_results: number
+  category: metaHeroesType,
+  max_results: number
 ): Promise<Hero[]> {
-	const browser = await puppeteer.launch({
-		headless: true,
-		defaultViewport: null,
-	});
+  const browser = await puppeteer.launch({
+    headless: true,
+    defaultViewport: null,
+  });
 
-	const aliasesCategory =
-		categoryAliases[category as keyof MetaHeroesAliases] || category;
+  const aliasesCategory =
+    categoryAliases[category as keyof MetaHeroesAliases] || category;
 
-	console.log(`Meta hero category: ${aliasesCategory}`);
+  console.log(`Meta hero category: ${aliasesCategory}`);
 
-	const page = await browser.newPage();
+  const page = await browser.newPage();
 
-	try {
-		await page.goto("https://dota2protracker.com/meta", {
-			waitUntil: "networkidle2",
-		});
+  try {
+    await page.goto("https://dota2protracker.com/meta", {
+      waitUntil: "networkidle2",
+    });
 
-		await page.waitForSelector("#meta-table .hero-row");
-		await page.waitForSelector(".nav a");
+    await page.waitForSelector("#meta-table");
+    await page.waitForSelector(".nav button");
 
-		const navLinks = await page.$$(".nav a");
+    const navLinks = await page.$$(".nav button");
 
-		const allHeroData: Hero[] = [];
+    const allHeroData: Hero[] = [];
 
-		for (const link of navLinks) {
-			const linkText = await page.evaluate((el) => el.innerText.trim(), link);
+    for (const link of navLinks) {
+      const linkText = await page.evaluate((el) => el.innerText.trim(), link);
 
-			if (linkText.includes(aliasesCategory)) {
-				console.log(`Getting meta data for '${linkText}' heroes...`);
+      if (linkText.includes(aliasesCategory)) {
+        console.log(`Getting meta data for '${linkText}' heroes...`);
 
-				await link.click();
+        await link.click();
 
-				await sleep(2000);
+        await sleep(2000);
 
-				const heroes = await page.evaluate(
-					(max_results, category, dataIndexToProperty, dataAllToProperty) => {
-						const heroElements = document.querySelectorAll(
-							"#meta-table .hero-row"
-						);
-						const heroData: Hero[] = [];
+        const heroes: Hero[] = await page.evaluate(
+          (category, max_results) => {
+            const rows = Array.from(
+              document.querySelectorAll(".tbody > div")
+            ).slice(0, max_results);
 
-						heroElements.forEach((hero, index) => {
-							if (index >= max_results) return;
+            const isAllCategory = category === "All";
 
-							const dataElements = hero.querySelectorAll(
-								"div[data-sort-value]"
-							);
-							const heroInfo: Partial<Hero | any> = {};
+            return rows.map((row) => {
+              const name = (
+                row.querySelector(
+                  isAllCategory
+                    ? "div:nth-child(1) a span"
+                    : "div:nth-child(2) a span"
+                ) as HTMLElement
+              )?.innerText;
+              const rating = (
+                row.querySelector(
+                  isAllCategory ? "div:nth-child(3)" : "div:nth-child(4)"
+                ) as HTMLElement
+              )?.innerText;
+              const matches = (
+                row.querySelector(
+                  isAllCategory ? "div:nth-child(4)" : "div:nth-child(5)"
+                ) as HTMLElement
+              )?.innerText;
+              const winRate = (
+                row.querySelector(
+                  isAllCategory ? "div:nth-child(5)" : "div:nth-child(6)"
+                ) as HTMLElement
+              )?.innerText;
+              const contestRate = (
+                row.querySelector(
+                  isAllCategory ? "div:nth-child(7)" : "div:nth-child(8)"
+                ) as HTMLElement
+              )?.innerText;
+              const radiantWinRate = (
+                row.querySelector(
+                  isAllCategory ? "div:nth-child(8)" : "div:nth-child(9)"
+                ) as HTMLElement
+              )?.innerText.split("\n")[1];
+              const direWinRate = (
+                row.querySelector(
+                  isAllCategory ? "div:nth-child(9)" : "div:nth-child(10)"
+                ) as HTMLElement
+              )?.innerText.split("\n")[1];
 
-							dataElements.forEach((element: any, dataIndex: number) => {
-								const property =
-									category !== "All"
-										? dataIndexToProperty[dataIndex]
-										: dataAllToProperty[dataIndex];
+              const heroData: Hero = {
+                name,
+                rating,
+                matches,
+                winRate,
+                contestRate,
+                radiantWinRate,
+                direWinRate,
+              };
+              return heroData;
+            });
+          },
+          category,
+          max_results
+        );
 
-								if (property) {
-									heroInfo[property] = element.dataset.sortValue;
-								}
-							});
+        allHeroData.push(
+          ...heroes.filter((hero): hero is Hero => hero !== undefined)
+        );
+      }
+    }
 
-							heroData.push(heroInfo as Hero);
-						});
-
-						return heroData;
-					},
-					max_results,
-					category,
-					dataIndexToProperty,
-					dataAllToProperty
-				);
-
-				allHeroData.push(...heroes);
-			}
-		}
-
-		return allHeroData;
-	} catch (error) {
-		console.error("Error during scraping:", error);
-		return [];
-	} finally {
-		await browser.close();
-	}
+    return allHeroData;
+  } catch (error) {
+    console.error("Error during scraping:", error);
+    return [];
+  } finally {
+    await browser.close();
+  }
 }
