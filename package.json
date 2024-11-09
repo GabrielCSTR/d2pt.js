@@ -43,7 +43,10 @@
   },
   "homepage": "https://github.com/gabrielcstr/d2pt.js#readme",
   "dependencies": {
-    "puppeteer": "^22.11.2"
+    "puppeteer": "^22.15.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer-select": "^1.0.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.13",
