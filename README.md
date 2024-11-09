@@ -65,16 +65,10 @@ async function getMetaheroes() {
 //   name: 'Templar Assassin',
 //   matches: '2829',
 //   winRate: '0.537',
-//   winRate9500: '0.535',
 //   contestRate: '0.5962534336020174',
 //   rating: '3570',
 //   radiantWinRate: '0.544',
 //   direWinRate: '0.53',
-//   expertWinRate: '0.588',
-//   phase1WinRate: '0.497',
-//   phase2WinRate: '0.531',
-//   phase3WinRate: '0.583',
-//   networth: '4668'
 // },
 //...
 
